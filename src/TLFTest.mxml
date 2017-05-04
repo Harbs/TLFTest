@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<js:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+    xmlns:js="library://ns.apache.org/flexjs/basic"
+    xmlns:svg="library://ns.apache.org/flexjs/svg"
+    initialize="init()">
+    <fx:Script>
+        <![CDATA[
+            import org.apache.flex.text.engine.IFont;
+            import org.apache.flex.text.engine.TextEngine;
+            import org.apache.flex.text.engine.ITextFactory;
+            import org.apache.flex.text.engine.ITextBlock;
+            import org.apache.flex.text.engine.TextElement;
+            import org.apache.flex.text.engine.ElementFormat;
+            import org.apache.flex.text.engine.FontDescription;
+            import org.apache.flex.core.IUIBase;
+            import org.apache.flex.text.engine.ITextLine;
+            import org.apache.flex.textLayout.elements.TextFlow;
+            import org.apache.flex.textLayout.elements.Configuration;
+            import org.apache.flex.textLayout.factory.StandardTLFFactory;
+            import org.apache.flex.textLayout.elements.ParagraphElement;
+            import org.apache.flex.textLayout.elements.SpanElement;
+            import org.apache.flex.textLayout.container.ContainerController;
+            import org.apache.flex.textLayout.factory.ITLFFactory;
+            import org.apache.flex.textLayout.utils.FactoryUtil;
+
+            private var textFactory:ITextFactory;
+            private var tlfFactory:ITLFFactory;
+            private function init():void{
+                
+                tlfFactory = FactoryUtil.defaultTLFFactory;
+                textFactory = tlfFactory.textFactory;
+                var font:IFont = textFactory.getFontLoader().loadFont("assets/fonts/OpenSans-Regular.ttf");
+                font.onLoad(function(font:*):*{
+                    var config:Configuration = new Configuration(true);		
+                    config.manageTabKey = true;
+                    var textFlow:TextFlow =  new TextFlow(tlfFactory, config);
+                    var para:ParagraphElement = new ParagraphElement();
+                    var span:SpanElement = new SpanElement();
+                    span.fontFamily = "Open Sans";
+                    span.fontStyle = "Regular";
+                    span.color = 0xFF0000;
+                    span.fontSize = 20;
+                    span.text = "Hello World From TLF!";
+                    para.addChild(span);
+                    textFlow.addChild(para);
+
+                    para = new ParagraphElement();
+                    span = new SpanElement();
+                    span.fontFamily = "Open Sans";
+                    span.fontStyle = "Regular";
+                    span.color = 0xFF0000;
+                    span.fontSize = 20;
+                    span.text = "Paragraph 2!";
+                    para.addChild(span);
+                    textFlow.addChild(para);
+
+                    textFactory = textFlow.tlfFactory.textFactory;
+
+                    var controller:ContainerController = new ContainerController(textContainer,NaN,NaN);
+                    textFlow.flowComposer.addController(controller);
+                    textFlow.flowComposer.updateAllControllers();
+
+                    config = new Configuration(true);		
+                    config.manageTabKey = true;
+                    textFlow =  new TextFlow(tlfFactory, config);
+                    para = new ParagraphElement();
+                    span = new SpanElement();
+                    span.fontFamily = "Open Sans";
+                    span.fontStyle = "Regular";
+                    span.color = 0xFF0000;
+                    span.fontSize = 20;
+                    span.text = "First line of text...\u2028Second line ";
+                    para.addChild(span);
+                    textFlow.addChild(para);
+                    textFactory = textFlow.tlfFactory.textFactory;
+
+                    controller = new ContainerController(textContainer2,textContainer2.width,textContainer2.height);
+                    textFlow.flowComposer.addController(controller);
+                    textFlow.flowComposer.updateAllControllers();
+
+                    config = new Configuration(true);		
+                    config.manageTabKey = true;
+                    textFlow =  new TextFlow(tlfFactory, config);
+                    para = new ParagraphElement();
+                    span = new SpanElement();
+                    span.fontFamily = "Open Sans";
+                    span.fontStyle = "Regular";
+                    span.color = 0xFF0000;
+                    span.fontSize = 20;
+                    span.text = "red, big span of text ";
+                    para.addChild(span);
+                    span = new SpanElement();
+                    span.fontFamily = "Open Sans";
+                    span.fontStyle = "Regular";
+                    span.color = 0x0000FF;
+                    span.fontSize = 18;
+                    span.text = "blue, smaller span of text ";
+                    para.addChild(span);
+                    textFlow.addChild(para);
+                    textFactory = textFlow.tlfFactory.textFactory;
+
+                    controller = new ContainerController(textContainer3,textContainer3.width,textContainer3.height);
+                    textFlow.flowComposer.addController(controller);
+                    textFlow.flowComposer.updateAllControllers();
+
+                });
+
+
+                
+            }
+        ]]>
+    </fx:Script>
+    <js:initialView> 
+        <js:View width="100%" height="100%">
+            <js:Label text="Hello World From Default Span" x="100" y="50"/>
+            <svg:GraphicContainer id="textContainer" x="20" y="150" width="300" height="150"/>
+            <svg:GraphicContainer id="textContainer2" x="20" y="300" width="300" height="150"/>
+            <svg:GraphicContainer id="textContainer3" x="20" y="450" width="300" height="150"/>
+        </js:View>
+    </js:initialView>
+    <js:valuesImpl>
+        <js:SimpleCSSValuesImpl />
+    </js:valuesImpl>
+</js:Application>

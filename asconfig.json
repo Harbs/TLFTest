@@ -1,0 +1,29 @@
+{
+    "config": "flex",
+    "compilerOptions": {
+        "debug": true,
+        "js-output-type": "flexjs",
+        "source-map": true,
+        "library-path": [
+            "lib"
+        ],
+        "external-library-path": [
+        "typedefs"
+        ]
+    },
+    "additionalOptions": "-remove-circulars -js-output-optimization=skipAsCoercions -html-template=src/resources/index-template.html",
+    "define": [
+        {
+            "name": "COMPILE::SWF",
+            "value": false
+        },
+        {
+            "name": "COMPILE::JS",
+            "value": true
+        }
+    ],
+    "files":
+    [
+        "src/TLFTest.mxml"
+    ]
+}
